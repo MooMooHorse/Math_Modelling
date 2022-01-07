@@ -2,7 +2,7 @@
 
 ​	This is a project that starts at 2022.01.07 and ends at 2022.02.22.
 
-​	The related participants to this project is `Li Rong` `Jin Xuanbo` `Ren Hao`.
+​	The related participants to this project are `Li Rong` `Jin Xuanbo` `Ren Hao`.
 
 ​	Related information, problems, solutions, summaries will be shared here.
 
