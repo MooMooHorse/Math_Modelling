@@ -9,7 +9,7 @@
 
 ## Supporting Quick Learning Materials.md
 
-### Marks & Commments
+### Marks & Comments
 
 * explicitly explain in markdown file
 
@@ -24,3 +24,6 @@
 ## Template Latex File
 
 * Pieces
+
+
+

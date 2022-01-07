@@ -12,9 +12,9 @@
 
 * `Problems To Solve.md` contains ongoing problems which need to be solved.
 
-* Temporary files while be put at root folder for convenience and must be categorized on time, and will be recorded here.
-  * `What kinds of materials will we produce.md` is temporary file to record the discussion at 2022.01.07 in the evening.
-    * The title shall be changed into specific items that will be decided.
-    
-    
+* `What kinds of materials will we produce.md` contains materials to produce.
+
+* `Websites.md` contains useful websites for searching vital information.
+
+  
 
