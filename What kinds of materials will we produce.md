@@ -18,6 +18,8 @@
 * papers
 * websites
 * code
+* Data (Q: whether data will be provided or provided not enough)
+* making graph
 
 ## Template Latex File
 
