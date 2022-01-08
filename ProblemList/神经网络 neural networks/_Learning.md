@@ -8,7 +8,78 @@
 
 ## Types of Neural Network
 
-* 
+
+链接：https://zhuanlan.zhihu.com/p/372516381
+
+
+
+### 十一大必知网络结构
+
+**1.Perceptron**
+
+感知机是所有神经网络的基础，主要由全连接层组成，下面是感知机示意图。
+
+![img](https://pic4.zhimg.com/v2-eb329263aba0f91b2361ecb021d8802b_b.jpg)
+
+**2.Feed-Forward Network(FNN)**
+
+FNN是有Perceptron组合得到的，由输入层、隐藏层和输出层组成，其结构如下：
+
+![img](https://pic1.zhimg.com/v2-e024cdd12d4bd99effa8abd43fd41aa8_b.jpg)
+
+**3.Residual Networks (ResNet)**
+
+[深度神经网络](https://www.zhihu.com/search?q=深度神经网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})最大问题就是当网络深度达到一定程度时就会出现消失梯度的问题，导致模型训练不佳，为了缓解该问题，我们设计了[残差网络](https://www.zhihu.com/search?q=残差网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})。它通过一个“跳跃”层传播信息号，大大缓解了梯度消失的问题。
+
+![img](https://pic1.zhimg.com/v2-a678ca93ec3e3cdef9e66927e5db8414_b.jpg)
+
+**4.Recurrent Neural Network (RNN)**
+
+[递归神经网络](https://www.zhihu.com/search?q=递归神经网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})是早期处理序列问题的始祖，它包含循环，并在自身上进行递归，因此得名“递归”。RNN允许将信息存储在网络中，并使用先前训练中的推理，对即将发生的事件做出更好、更明智的决策。
+
+![img](https://pic1.zhimg.com/v2-9b59c0ebcebdf93d75475dae29ce222c_b.jpg)
+
+**5.Long Short Term Memory Network (LSTM)**
+
+RNN最大的问题在于，一旦处理的序列较长的时候，例如100，RNN的效果就会大大变差，所以大家设计了LSTM，LSTM可以处理大约300左右长度的序列，这也是为什么目前LSTM在序列化的问题中还经常被使用的原因。
+
+![img](https://pic3.zhimg.com/v2-aa66adc02aa0cac33f909fba45565e0a_b.jpg)
+
+**6.Echo State Networks(ESN)**
+
+[回声状态网络](https://www.zhihu.com/search?q=回声状态网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})由输入层、隐藏层(即储备池)、输出层组成，是递归神经网络的一种变体，它有一个非常稀疏连接的隐层（通常是百分之一左右的连通性）。[神经元](https://www.zhihu.com/search?q=神经元&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})的连接和权值是随机分配的，忽略层和神经元的差异（跳跃连接）。ESN将隐藏层设计成一个具有很多神经元组成的[稀疏网络](https://www.zhihu.com/search?q=稀疏网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})，通过调整网络内部权值的特性达到记忆数据的功能。
+
+![img](https://pic4.zhimg.com/v2-8b1509cc59f2866a9d0ff1814c82ddbf_b.jpg)
+
+**7.Convolutional Neural Network (CNN)**
+
+CNN早期在图像中取得了巨大的成功，在今日，CNN仍然是不可或缺的一部分。因为图像数据有着非常高的维度，训练一个标准网络训练图像（例如简单的MLP）都需要数十万个输入神经元，除了明显的高计算开销外，还会导致许多与神经网络维数灾难相关的问题。CNN则利用卷积层来帮助降低图像的维数，不仅大大降低了训练的参数，而且在效果上也取得了巨大的提升。
+
+![img](https://pic3.zhimg.com/v2-edbcf67ab1ced9fe4c49b82fb7a7351a_b.jpg)
+
+**8.Deconvolutional Neural Network (DNN)**
+
+反卷积神经网络，顾名思义，其性能与卷积神经网络相反。DNN并不是通过卷积来降低来图像的维数，而是利用反卷积来创建图像，一般是从噪声中生成的。DNN还经常用于寻找丢失的特征或信号，这些特征或信号以前可能被认为对[卷积神经网络](https://www.zhihu.com/search?q=卷积神经网络&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"372516381"})的任务并不重要。一个信号可能由于与其他信号卷积而丢失。信号的Deconvolution可以用于图像合成和分析。
+
+![img](https://pic1.zhimg.com/v2-6f51d07f73b61aa2120a98ed76d2b368_b.jpg)
+
+**9.Generative Adversarial Network (GAN)**
+
+生成性对抗网络是一种专门设计用来生成图像的网络，它由两个网络组成：一个生成器和一个判别器。判别器的任务是区分图像是从数据集中提取的还是由生成器生成的，生成器的任务是生成虚假的图像，尽可能使得判别器无法区分图像是否真实，目前GAN生成的图像很多都是栩栩如生，甚至达到了以假乱真的程度。
+
+![img](https://pic2.zhimg.com/v2-ca2590fa64e50e019472cfdd2c6558dd_b.jpg)
+
+**10.Auto Encoder (AE)**
+
+自动编码器的应用非常广，包括模型压缩、数据去噪、异常检测、推荐系统等等。其基本思想是将原始的高维数据“压缩”、低维的数据，然后将压缩后的数据投影到一个新的空间中。
+
+![img](https://pic4.zhimg.com/v2-2021298d5264a2ecc9bc8a43dde0e423_b.jpg)
+
+**11.Variational Auto Encoder (VAE)**
+
+自动编码器学习输入的压缩表示，而变分自动编码器（VAE）学习表示数据的概率分布的参数。它不只是学习表示数据的函数，而是获得更详细和细致的数据视图，从分布中采样并生成新的输入数据样本。所以VAE更像是一个“生成”模式，类似于GAN。
+
+![img](https://pic1.zhimg.com/v2-a312847d56ec351735ae8c1f900662d0_b.jpg)
 
 ## Basics
 
@@ -202,3 +273,9 @@
   * shape[0] ：第一维长度
   * ![image-20220108195100024](https://s2.loli.net/2022/01/08/x8dEXtacjDILV7l.png)
     * 注意观察
+
+## Deeper(Real) Usage
+
+* 基于CS224b Stanford University 所谓入门 ~~我没看~~ ~~真的不想看qwq~~
+  * https://www.zybuluo.com/hanbingtao/note/433855
+
