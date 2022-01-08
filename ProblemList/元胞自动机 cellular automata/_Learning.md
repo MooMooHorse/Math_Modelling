@@ -344,7 +344,7 @@ x1 = []
 * 不用推公式
 * 设定转移方程/转移函数 十分感性，不需要严谨的推导，甚至可以试出来
   * 比如`NaSch` 的转移如下
-    * ![image-20220108140658352](C:\Users\86189\AppData\Roaming\Typora\typora-user-images\image-20220108140658352.png)
+    * ![image-20220108180049022](https://s2.loli.net/2022/01/08/XcBDpZyrInJ4zsv.png)
 * 可以研究难易找到研究对象的问题
   * 比如连续性问题
   * 比如对象非常多，难以一一研究的问题
