@@ -50,3 +50,6 @@ $$\frac{\partial f(x)}{\partial x*}+\sum_{k=1}^N\frac{\partial}{\partial x*}\lam
 ******************
 
 ## 结论
+
+$f(x)=\omega^Tx+b$在$x\in \{negative\}$时满足$f(x)\le-1$，在$x\in\{positive\}$时满足$f(x)\ge1$，求$\omega$与$b$
+
