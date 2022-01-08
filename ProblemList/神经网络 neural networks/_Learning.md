@@ -359,3 +359,4 @@ for j in range(10000):   #这里设置了训练的循环次数为10000
 * 基于CS224b Stanford University 所谓入门 ~~我没看~~ ~~真的不想看qwq~~
   * https://www.zybuluo.com/hanbingtao/note/433855
 
+* https://www.youtube.com/watch?v=tp3KIQx4Mkk&ab_channel=NuruzzamanFaruqui
