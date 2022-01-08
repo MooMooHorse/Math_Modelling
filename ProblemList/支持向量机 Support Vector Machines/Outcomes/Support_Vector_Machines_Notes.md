@@ -2,6 +2,10 @@
 
 ## 需要用到的知识
 
+https://blog.csdn.net/weixin_44378835/article/details/110732412
+
+https://blog.csdn.net/liweibin1994/article/details/77504210
+
 ### 高数中的拉格朗日乘子（已学）
 
 ### 矩阵分析里的拉格朗日乘子
@@ -19,3 +23,4 @@ $$L\left(x,\lambda\right)=f(x)+\sum_{k=1}^{N}\lambda_kg_k(x)$$
 $$\frac{\partial f(x)}{x*}+\sum_{k=1}^N\frac{\partial}{\partial x*}\lambda_kg_k(x)=0$$
 
 * #### 含有不等式约束（拉格朗日对偶问题）
+
