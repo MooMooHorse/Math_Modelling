@@ -123,3 +123,7 @@ https://blog.csdn.net/u012526003/article/details/79088214
 RBF即高斯核，相对的线性是poly
 
 调参（炼丹）
+
+## 论文相关
+
+论文中SVM只是一个用来预测index value of years的辅助工具`（见5.2.1节）`，感觉是凑数用的。
