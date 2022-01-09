@@ -354,6 +354,58 @@ for j in range(10000):   #这里设置了训练的循环次数为10000
 
 
 
+## Why do we need multiple layers?
+
+> 一层的神经网络是理论上已经被证明能够表示任何函数
+>
+> 也就是说
+>
+> **无论什么问题，都能被一层神经网络训练得到答案**。
+
+这是一个非常恐怖的事实，也就是说
+
+* 我们之前解决的**所有问题**，无论是什么领域的，都是给定条件，找出答案
+  * 条件，就是自变量，答案就是因变量
+* 也就是说 所有问题都能通过一层神经网络训练实现。
+
+但是
+
+* 隐藏层的节点数是无法确定的
+
+考虑函数
+
+* $f(x)=rand(x)$
+
+这里隐藏层的节点数是$\infin$,
+
+所以理论上能表示，并不代表你能在有限的时间内实现
+
+所以需要根据需要，增加层数，
+
+* 实质上就是增加非线性，可以更好地表现出**信息间交互的特征**
+
+  
+
+相关帖子,如下，是**[David Torpey](https://www.quora.com/profile/David-Torpey-2)**写的
+
+> Neural networks (kind of) need multiple layers in order to learn more detailed and more abstractions relationships within the data and how the features interact with each other on a non-linear level.
+>
+> Even though it is theoretically possible to represent any possible function with a single hidden layer neural network, determine the number of nodes needed in that hidden layer is difficult. Therefore, adding more layers (apart from increasing computational complexity to the training and testing phases), allows for more easy representation of the interactions within the input data, as well as allows for more abstract features to be learned and used as input into the next hidden layer.
+>
+> Regression example: Learning to predict the selling price of houses given features: number of rooms, number of bathrooms, number of windows, size of house in ft^2, distance from highways, age of building, etc.
+>
+> The first layer might learn simple, non-abstract features about how these input features relate to the selling price, such as: more rooms or a bigger house = higher selling prices and vice versa.
+>
+> As we get deeper into the network, the features it will have learned will be much more complex and much more abstract, such as: small house + very old house = high selling price and big house + small number of bathrooms = low selling prices. The point is that the features learned in the deeper layers get much more intricate and detailed, and the network learns how these abstract features affect the selling price.
+>
+> Classification example: Classify objects in images
+>
+> We feed in raw images (the pixels values) into a convolutional neural network with many layers. The first layer might learn simple geometrical objects such as lines that signify the object we are trying to classify. The deeper layers will learn much more abstract, detailed features about the objects such as sets of lines that define shapes, and then eventually sets of these shapes from the earlier layers that make up the shape of the object we are trying to classify, for example a car.
+>
+> Deep is essentially features learning. This is why you need the network to have many layers (i.e. deep). They need to have many layers of abstraction since we want the neural network to learn as well as possible what type of non-linear manifold in the high dimensions the input data lies on.
+
+
+
 ## Deeper(Real) Usage
 
 * 基于CS224b Stanford University 所谓入门 ~~我没看~~ ~~真的不想看qwq~~
