@@ -352,7 +352,20 @@ for j in range(10000):   #这里设置了训练的循环次数为10000
     b1 += -epsilon * db1
 ```
 
+### Loss Function & Back-Propagation
 
+https://victorzhou.com/blog/intro-to-neural-networks/
+
+我发现这个大佬（超强，编了一个我很喜欢玩的游戏，在大学的时候）也写了关于Neural Network 基础，
+
+我觉得他用稍微变形（可能是比较正统，我也说不清）的方式写一遍，让我对当中一些问题有更好的想法。
+
+* Loss Function
+  * 只要是，我们求出的损失，不管是在哪层，都可以说是loss function，只要一个函数满足`反映了最终输出和理想输出间差距，且差距越小越好`，那就可以是loss function
+  * 也就是在zhihu那个帖子里的，softmax 和 error 层后的结果都可以叫loss function
+* Back-propagation
+  * 可以以任意设定的loss function为起点，不一定是最后往前传
+  * 然后推公式其实也挺简单的，就是一层一层表示出来，然后求偏导就行了
 
 ## Why do we need multiple layers?
 
