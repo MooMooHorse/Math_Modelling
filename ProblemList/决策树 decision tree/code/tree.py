@@ -18,25 +18,35 @@ import graphviz # 插入graphviz库
 import os
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/' # 设定Graphviz环境
 
-
 def get_yvec_xmat_vnames(target, df):
+    """
+        把csv数据处理成scikit-learn库接受的形式
+        pandas index 是 array-like 所以是可以被接受的
+        get_dummies 是把字符串编码
+    """
+
 
     yvec = df[target]
 
+
+    # print(df.columns)
+
     # 将拥有n个不同数值的变量转换为n个0/1的变量，变量名字中有"_isDummy_"作为标注
-    xmat = pd.get_dummies(df.loc[:, df.columns != target], prefix_sep = "_isDummy_")
+    xmat = pd.get_dummies(df.loc[:, df.columns != target], prefix_sep = "_isDummy_") # 将字符串编码成数字
 
     vnames = xmat.columns
+
+    # print(vnames)
 
     return yvec, xmat, vnames
 
 
-
+targetName="survived"
 
 df = pd.read_csv('Titanic.csv', header=0)
-df.survived = df.survived.astype(str)
 
-yvec, xmat, vnames = get_yvec_xmat_vnames("survived",df) #注意这里的csv应该保证有标签，不然会很难看
+
+yvec, xmat, vnames = get_yvec_xmat_vnames(targetName,df) #注意这里的csv应该保证有标签，不然会很难看
 dt = DecisionTreeClassifier(max_depth=2, random_state=1234)
 
 dt.fit(xmat, yvec)
@@ -55,6 +65,9 @@ graph.render('graph')
 我觉得可以先贴原来的图，然后美化，因为只需要把最终结果美化，所以工作量不会太大（如果太大就用他的）
 原图需要保留，因为gini和sample数量还是比较重要的
 如果工作量不打的话，用流程图软件画一下，只保留非统计信息，会比他的好看。
+
+
+以下代码均是从上面的树上提取信息，不用做任何改动
 """
 
 def get_categorical_dict(df):
@@ -289,6 +302,6 @@ def regression_tree_to_dot(tree, feature_names, categorical_dict):
     recurse(0, 1,categorical_dict)
     return graphvic_str + "}"
 
-dot_data = tree_to_dot(dt, "survived",df)
+dot_data = tree_to_dot(dt, targetName,df)
 graph = graphviz.Source(dot_data)  
 graph.render("improved")
