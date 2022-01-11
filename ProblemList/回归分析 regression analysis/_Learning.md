@@ -102,3 +102,10 @@
   > 第五步，输出数据方便理解；输出[模型分数](https://www.zhihu.com/search?q=模型分数&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"53977691"})用于对比效果。
   >
   > 看到这里你可能已经明白了，多项式回归虽然拟合了多项式曲线，但其本质仍然是线性回归，只不过我们将输入的特征做了些调整，增加了它们的多次项数据作为新特征。其实除了多项式回归，我们还可以使用这种方法拟合更多的曲线，我们只需要对原始特征作出不同的处理即可。
+
+
+
+## 注意
+
+* regression实际上是所有问题都要干的，所以在ml相关的问题里都会涉及
+  * 在决策树的`Multi-output`代码中，有$3$种不用于线性回归的方式，都可以用来预测。
