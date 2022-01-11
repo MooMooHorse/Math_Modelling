@@ -47,7 +47,14 @@ df = pd.read_csv('Titanic.csv', header=0)
 
 
 yvec, xmat, vnames = get_yvec_xmat_vnames(targetName,df) #注意这里的csv应该保证有标签，不然会很难看
-dt = DecisionTreeClassifier(max_depth=2, random_state=1234)
+
+##################################################
+#注意这里的参数 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#可以调节以获取不同精确度，复杂度的decision tree
+#平衡精确度与复杂度很关键
+dt = DecisionTreeClassifier(max_depth=3, random_state=1234)
+#这个很重要，而且不只是分类树，还可以是回归树
+##################################################
 
 dt.fit(xmat, yvec)
 
