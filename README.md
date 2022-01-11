@@ -10,7 +10,7 @@
 
 * `PorblemList` folder contains problems in past contest that are **categorized by types of strategies**.
 
-* `Problems To Solve.md` contains ongoing problems which need to be solved.
+* `Meeting.md` contains ongoing problems which need to be solved.
 
 * `What kinds of materials will we produce.md` contains materials to produce.
 
