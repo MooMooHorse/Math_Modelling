@@ -105,7 +105,9 @@ PCA(Principal Component Analysis)，即主成分分析方法，是一种使用�
 
 
 
-
+> https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg 
+>
+> 这个挺有帮助的
 
 
 
