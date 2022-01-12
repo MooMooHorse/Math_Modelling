@@ -1,5 +1,13 @@
 # Decision Tree
 
+
+
+## 适用范围
+
+* 如果输入数据联系非常紧密，且有优先关系
+  * 这样就满足一个树形结构，就比较容易通过决策树学习得出
+    * 比如人脸，往往是先由几个关键部分决定的
+
 https://blog.csdn.net/u012328159/article/details/70184415
 
 https://blog.csdn.net/u012328159/article/details/79285214
