@@ -1,3 +1,5 @@
+# Doc Address : https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
+
 import matplotlib.pyplot as plt
 
 from sklearn import datasets
@@ -11,7 +13,9 @@ y = iris.target
 target_names = iris.target_names
 
 pca = PCA(n_components=2)
-X_r = pca.fit(X).transform(X)
+# fit(X[, y]) Fit the model with X.
+# transform(X) Apply dimensionality reduction to X.
+X_r = pca.fit(X).transform(X) 
 
 
 """
