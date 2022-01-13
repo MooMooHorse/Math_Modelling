@@ -2,11 +2,8 @@
 
 * 现在模型主要有哪几块？
 
-  * 我学了的是
-    * 神经网络
-    * 随机最优解
-    * 离散化
-    * 图论
+  * ML
+  * NON-ML
 
 * 现在的模型进度如何，这样推进感觉怎么样？
 
@@ -24,6 +21,10 @@
     * 毕竟监督学习和非监督学习都是很重要的
   * 应该针对比赛进行问题的某部分专门的准备，这个应该尽早开始
   * Preprocessing学习
+  * visualization
+  * sensitivity rubustness
+  * validation performance evaluation
+  * abstract
 
 
 

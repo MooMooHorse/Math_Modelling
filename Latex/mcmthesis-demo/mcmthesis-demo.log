@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.5)  11 JAN 2022 22:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.5)  13 JAN 2022 21:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -785,7 +785,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [7] (./mcmthesis-demo.aux)
 Package rerunfilecheck Info: File `mcmthesis-demo.out' has not changed.
-(rerunfilecheck)             Checksum: 219DFF6EB6956CF30D59B9BD075E317F;2891.
+(rerunfilecheck)             Checksum: E466E38E43CF1211C4A0657AD69ABBAA;2939.
  ) 
 Here is how much of TeX's memory you used:
  16039 strings out of 478557
@@ -796,7 +796,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  75i,13n,99p,481b,2243s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}<d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/lm/lmss17.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb><d:/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><d:/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmb.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on mcmthesis-demo.pdf (9 pages, 307557 bytes).
+Output written on mcmthesis-demo.pdf (9 pages, 307883 bytes).
 PDF statistics:
  305 PDF objects out of 1000 (max. 8388607)
  255 compressed objects within 3 object streams
