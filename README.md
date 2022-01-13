@@ -16,5 +16,9 @@
 
 * `Websites.md` contains useful websites for searching vital information.
 
+* `Latex` folder contains the thesis paper that we're going to complete.
+
+* `Section` folder contains specific parts of paper that needs extra attentions.
+
   
 
