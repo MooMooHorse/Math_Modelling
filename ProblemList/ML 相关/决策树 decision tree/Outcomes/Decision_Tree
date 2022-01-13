@@ -34,10 +34,6 @@ https://blog.csdn.net/u012328159/article/details/79285214
 
 ![img](https://pic3.zhimg.com/80/v2-8f6407e5ab5a58b2913aef6a332090f6_720w.jpg)
 
-
-
-所以决策树的生成主要分以下两步，这两步通常通过学习已经知道分类结果的样本来实现。
-
 > [ID3](https://en.wikipedia.org/wiki/ID3_algorithm) (Iterative Dichotomiser 3) was developed in 1986 by Ross Quinlan. The algorithm creates a multiway tree, finding for each node (i.e. in a greedy manner) the categorical feature that will yield the largest information gain for categorical targets. Trees are grown to their maximum size and then a pruning step is usually applied to improve the ability of the tree to generalise to unseen data.
 
 > C4.5 is the successor to ID3 and removed the restriction that features must be categorical by dynamically defining a discrete attribute (based on numerical variables) that partitions the continuous attribute value into a discrete set of intervals. C4.5 converts the trained trees (i.e. the output of the ID3 algorithm) into sets of if-then rules. These accuracy of each rule is then evaluated to determine the order in which they should be applied. Pruning is done by removing a rule’s precondition if the accuracy of the rule improves without it.
