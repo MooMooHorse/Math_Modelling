@@ -24,6 +24,18 @@ Stability can be divided into two parts:
 
 ## Error
 
+### Variance Analysis
+
+
+
+
+
+
+
+
+
+### Cross Validation Estimation
+
 This can be done (for machine learning aka.`ml`) with
 
 * cross validation estimation (**for machine learning only**)
@@ -39,13 +51,13 @@ https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-p
 * This sentence is crucial for us, so I also make it below
   * *A value of k=10 is very common in the field of applied machine learning, and is recommend if you are struggling to choose a value for your dataset.*
 
-### Why do we have to use cross validation(CV)?
+#### Why do we have to use cross validation(CV)?
 
 * In this way,  we can know **how good the estimator using just training data**
 
 * Note that we're evaluating **estimator**(pca,fa,svm,cluster,neuro network...) NOT data.
 
-### CV result $\rightarrow$ score
+#### CV result $\rightarrow$ score
 
 * the formulae for score can be seen in this link
   * https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators
@@ -55,10 +67,10 @@ https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-p
     * https://machinelearningmastery.com/principal-components-analysis-for-dimensionality-reduction-in-python/
     * but according to this, pca is usually the first few steps, so you don't have to validate it.**(Most of the time, pca doesn't require machine learning)**
 
-### Process of CV
+#### Process of CV
 
 https://scikit-learn.org/stable/modules/cross_validation.html#a-note-on-shuffling
 
-### How to find the best parameters
+#### How to find the best parameters
 
 https://scikit-learn.org/stable/modules/grid_search.html#exhaustive-grid-search
