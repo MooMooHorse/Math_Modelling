@@ -73,4 +73,6 @@ https://scikit-learn.org/stable/modules/cross_validation.html#a-note-on-shufflin
 
 #### How to find the best parameters
 
+* you can see the `score` easily not even with help of CV api, but just `clf.score()`
+
 https://scikit-learn.org/stable/modules/grid_search.html#exhaustive-grid-search
