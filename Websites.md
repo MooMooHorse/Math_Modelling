@@ -20,4 +20,10 @@ https://scikit-learn.org/stable/glossary.html#glossary ： glossary
 
 ## Academic Journal
 
+### General
+
 https://www.sciencedirect.com/
+
+### Ecology
+
+https://besjournals.onlinelibrary.wiley.com/
