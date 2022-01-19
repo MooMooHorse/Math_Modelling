@@ -17,3 +17,7 @@ https://numpy.org/doc/stable/user/numpy-for-matlab-users.html : Numpy & Matlab �
 https://scikit-learn.org/stable/auto_examples/index.html ： scikit-learn doc
 
 https://scikit-learn.org/stable/glossary.html#glossary ： glossary
+
+## Academic Journal
+
+https://www.sciencedirect.com/
