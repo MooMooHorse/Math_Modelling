@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.5)  13 JAN 2022 21:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.5)  21 JAN 2022 19:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -685,12 +685,12 @@ LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
 (Font)              scaled to size 12.0pt on input line 117.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
 (Font)              scaled to size 8.0pt on input line 120.
-LaTeX Font Info:    Trying to load font information for T1+qhv on input line 132.
+LaTeX Font Info:    Trying to load font information for T1+qhv on input line 133.
  (d:/texlive/2021/texmf-dist/tex/latex/tex-gyre/t1qhv.fd
 File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 )
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 132.
+(Font)              scaled to size 9.85492pt on input line 133.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -740,6 +740,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 239--240
 
  []
 
+LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
+(Font)              scaled to size 10.0pt on input line 242.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 242.
+(d:/texlive/2021/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+) (./code/mcmthesis-matlab1.m
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -747,13 +753,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[5]
-LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 10.0pt on input line 242.
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 242.
- (d:/texlive/2021/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) (./code/mcmthesis-matlab1.m) (./code/mcmthesis-sudoku.cpp
+[5]) (./code/mcmthesis-sudoku.cpp
 Overfull \hbox (15.03687pt too wide) in paragraph at lines 1--2
 [][][][][][][][][] 
  []
@@ -766,15 +766,7 @@ Overfull \hbox (15.03687pt too wide) in paragraph at lines 7--9
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 25.
 (d:/texlive/2021/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
-)
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[6]) 
+)) 
 AED: lastpage setting LastPage
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -783,23 +775,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[7] (./mcmthesis-demo.aux)
+[6] (./mcmthesis-demo.aux)
 Package rerunfilecheck Info: File `mcmthesis-demo.out' has not changed.
 (rerunfilecheck)             Checksum: E466E38E43CF1211C4A0657AD69ABBAA;2939.
  ) 
 Here is how much of TeX's memory you used:
- 16039 strings out of 478557
- 229412 string characters out of 5854912
- 957595 words of memory out of 5000000
+ 16038 strings out of 478557
+ 229406 string characters out of 5854912
+ 958447 words of memory out of 5000000
  33503 multiletter control sequences out of 15000+600000
  473900 words of font info for 132 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,99p,481b,2243s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,13n,99p,481b,2669s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}{d:/texlive/2021/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}<d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/lm/lmss17.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/tex-gyre/qhvr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb><d:/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><d:/texlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmb.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmr.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on mcmthesis-demo.pdf (9 pages, 307883 bytes).
+Output written on mcmthesis-demo.pdf (8 pages, 306853 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 255 compressed objects within 3 object streams
- 87 named destinations out of 1000 (max. 500000)
+ 300 PDF objects out of 1000 (max. 8388607)
+ 251 compressed objects within 3 object streams
+ 86 named destinations out of 1000 (max. 500000)
  147 words of extra memory for PDF output out of 10000 (max. 10000000)
 
