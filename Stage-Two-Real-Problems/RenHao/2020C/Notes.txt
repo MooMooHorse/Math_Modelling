@@ -1,0 +1,59 @@
+Requirements
+
+1. Analyze the three product data sets provided to identify, describe, and support with mathematical evidence, meaningful quantitative and/or qualitative patterns, relationships, measures, and parameters within and between star ratings, reviews, and helpfulness ratings that will help Sunshine Company succeed in their three new online marketplace product offerings.
+
+Strategy:
+	Data Preprocessing    --    Get Clean Review and some data measures for them
+	
+	Data measures  		  --   	1. Review Result Classification
+								2. How helpfulness weights ratings.
+								3. How are star rating and comments classification connected.
+								4. (Optional) Numberof Helpfulness and Number of Certain Types of Rating
+	
+	Define Reputation     --    Rating and Review <--weight-- helpfulness
+	
+	
+	
+
+
+2. Use your analysis to address the following specific questions and requests from the Sunshine Company Marketing Director:
+
+(a) Identify data measures based on ratings and reviews that are most informative for Sunshine Company to track, once their three products are placed on sale in the online marketplace.
+	Needs: LDA analysis
+	0.1 Cumulative Good(Bad) Review Number
+	0.1 Cumulative Good(Bad) Review Frequency
+	1. Satisfaction Extent (from rating)
+	2. Improvement Desire (Faith) (from keywords)
+		From high rating, you search for bad comments
+		From bad rating,  you search for key words
+	3. Reputation = Weighted Culmulative rating Frequency + Improvement Desire 
+	
+
+
+(b)Identify and discuss time-based measures and patterns within each data set that might suggest that a product's reputation is increasing or decreasing in the online marketplace.
+	Comments -> Several Index -> Score for Comments
+	Score Result - Time Plot
+	Rating - Time Plot
+
+(c)Determine combinations of text-based measure(s) and ratings-based measures that best indicate a potentially successful or failing product.
+
+Strategy:	
+	
+	Use result from comments and rating and their number as targets, set up a time-target plot and use neuro-network to predict it.
+	
+
+(d)Do specific star ratings incite more reviews? For example, are customers more likely to write some type of review after seeing a series of low star ratings?
+
+Strategy:
+	For each product,
+		Split rates in half by time, analyze the former and latter parts of the rating & reviews.
+		Or set an index for each time stamp, {future daily review number (of certain type)} / {current review number (of certain type)}
+
+(e) Are specific quality descriptors of text-based reviews such as 'enthusiastic', 'disappointed', and others, strongly associated with rating levels?
+
+Strategy:
+	Use dictionary to select the most frequent words.
+	And connect them to rating.
+
+
+3. Write a one- to two-page letter to the Marketing Director of Sunshine Company summarizing your team's analysis and results. Include specific justification(s) for the result that your team most confidently recommends to the Marketing Director.
