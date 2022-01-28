@@ -56,10 +56,10 @@ def Del_list(list_of_list_of_tokens,htmlname):
     from gensim import corpora, models
 
     import nltk
-    nltk.download('stopwords')
+    # nltk.download('stopwords')
     from nltk.corpus import stopwords
     stop_words = stopwords.words('english')
-    stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The'])
+    stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The','I','When'])
 
 
     for list_member in list_of_list_of_tokens:
@@ -73,10 +73,10 @@ def LDA(list_of_list_of_tokens,htmlname):
     from gensim import corpora, models
 
     import nltk
-    nltk.download('stopwords')
+    # nltk.download('stopwords')
     from nltk.corpus import stopwords
     stop_words = stopwords.words('english')
-    stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The'])
+    stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The','I'])
 
 
     for list_member in list_of_list_of_tokens:
@@ -211,7 +211,73 @@ for product in products_microwave:
         Note:
             the date difference is in (days)
 """
+from tqdm import tqdm
+from numpy import array
+from numpy import argmax
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 
+dic_for_words=[]
+real_dic={}
+for i in array_for_LSTM:
+    for j in i:
+        dic_for_words.extend(j[0])
+values = array(dic_for_words)
+label_encoder = LabelEncoder()
+integer_encoded = label_encoder.fit_transform(values)
+real_dic=real_dic.fromkeys(dic_for_words,0)
+for i in tqdm(dic_for_words):
+    real_dic[i]+=1
+
+list_for_words=[[],[]]
+list_for_words[0]=list(real_dic.keys())
+list_for_words[1]=list(real_dic.values())
+list_for_words = list(map(list, zip(*list_for_words)))
+list_for_words.sort(key=lambda x:x[1],reverse=True)
+print(list_for_words[0:200])
+
+
+
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+
+
+
+class lstm(nn.Module):
+    def __init__(self,input_size=2,hidden_size=4,output_size=1,num_layer=2):
+        super(lstm,self).__init__()
+        self.layer1 = nn.LSTM(input_size,hidden_size,num_layer)
+        self.layer2 = nn.Linear(hidden_size,output_size)
+    
+    def forward(self,x):
+        x,_ = self.layer1(x)
+        s,b,h = x.size()
+        x = x.view(s*b,h)
+        x = self.layer2(x)
+        x = x.view(s,b,-1)
+        return x
+
+model = lstm(2,4,1,2)
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
+
+
+
+
+
+'''
+
+# define example
+data = ['cold', 'cold', 'warm', 'cold', 'hot', 'hot', 'warm', 'cold', 'warm', 'hot']
+
+
+inverted = label_encoder.inverse_transform([argmax(onehot_encoded[:, :])])
+print(inverted)
+
+'''
 # print(array_for_LSTM[1][1])
 
 # list_of_list_of_tokens=[]
