@@ -56,7 +56,7 @@ def Del_list(list_of_list_of_tokens,htmlname):
     from gensim import corpora, models
 
     import nltk
-    nltk.download('stopwords')
+    # nltk.download('stopwords')
     from nltk.corpus import stopwords
     stop_words = stopwords.words('english')
     stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The'])
@@ -73,7 +73,7 @@ def LDA(list_of_list_of_tokens,htmlname):
     from gensim import corpora, models
 
     import nltk
-    nltk.download('stopwords')
+    # nltk.download('stopwords')
     from nltk.corpus import stopwords
     stop_words = stopwords.words('english')
     stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The'])
@@ -205,6 +205,12 @@ for product in products_microwave:
         Note:
             the date difference is in (days)
 """
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+
 
 # print(array_for_LSTM[0][0])
 
