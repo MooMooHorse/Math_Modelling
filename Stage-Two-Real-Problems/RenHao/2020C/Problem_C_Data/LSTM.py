@@ -145,11 +145,11 @@ element_ind=0 # since it's sorted, you can extract element from token_list in th
 
 sample_DEBUG=0 # turn on <- =1
 
-pd.set_option('mode.chained_assignment', None) # It must be a dickhead to set a warning on this point!
 
 for product in products_microwave:
     array_item=[]
-    df_part=df_microwave[df_microwave["product_id"] == product]
+    df_part=df_microwave[df_microwave["product_id"] == product].copy()
+
     df_part.loc[df_part.index[0],"diff_date"]=0
 
     df_len=[*range(len(df_part))]
