@@ -1,0 +1,120 @@
+\documentclass{mcmthesis}
+\mcmsetup{CTeX = false,   % enable Chinese character 使用 CTeX 套装时，设置为 true
+        tcn = 00000000, problem = D,
+        sheet = true, titleinsheet = true, keywordsinsheet = true,
+        titlepage = false, abstract = false}
+\title{}
+\date{\today}
+
+\usepackage{subfiles} % Best loaded last in the preamble
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+
+\begin{document}
+
+\subfile{sections/abstract}
+
+
+
+
+
+% Generate the Table of Contents if it's needed.
+\tableofcontents
+\newpage
+
+
+% Generate the Memorandum, if it's needed.
+% \memoto{\LaTeX{}studio}
+% \memofrom{Liam Huang}
+% \memosubject{Happy \TeX{}ing!}
+% \memodate{\today}
+% \logo{\LARGE I'm pretending to be a LOGO!}
+% \begin{memo}[Memorandum]
+%   ;
+% \end{memo}
+
+
+\section{Introduction}
+
+  \begin{center}
+  \begin{tabular}{ | m{5em} | m{1cm}| m{2cm} | } 
+    \hline
+    cell1 dummy text dummy text dummy text& cell2 & cell3 \\ 
+    \hline
+    cell1 dummy text dummy text dummy text & cell5 & cell6 \\ 
+    \hline
+    cell7 & cell8 & cell9 \\ 
+    \hline
+  \end{tabular}
+  \end{center}
+
+  \subfile{sections/introduction}
+What a dick\cite{yaggi2006sleep}
+Link\cite{WinNT}
+\section{Basic Analysis of the problem}
+  \subfile{sections/basic_analysis}
+
+\section{List Of Symbols}
+  \subfile{sections/symbols}
+
+\section{General Assumptions}
+  \subfile{sections/assumptions}
+
+\section{The Models}
+  \subfile{sections/models}
+
+\section{Conclusions}
+  \subfile{sections/conclusions}
+
+\section{Model Evaluation And Improvement}
+  \subfile{sections/evaluation}
+
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{../reference/reference}
+
+
+
+\newpage
+\begin{appendices}
+% 	Here are the programs we used in our model as follow.
+  
+	\section{Code for map plotting}
+  
+%   	\textbf{Input Lingo source:}
+  \begin{verbatim}
+    from mpl_toolkits.basemap import Basemap
+    import matplotlib.pyplot as plt
+
+    m = Basemap(projection='mill',llcrnrlat=-60,urcrnrlat=90,\
+                    llcrnrlon=-180,urcrnrlon=180,resolution='l')
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    m.fillcontinents(color='#04BAE3', lake_color='#FFFFFF')
+    m.drawmapboundary(fill_color='#FFFFFF')
+
+    lat = 30,31,34,33,32
+    lon = -103,-110,-107,-111,-115
+
+
+    lat2 = 40,33,44,31,30
+    lon2 = -113,-100,-102,-111,-112
+
+    x,y = m(lon,lat)
+    m.plot(x,y,'ro',markersize=2,alpha=.5)
+
+    x,y = m(lon2,lat2)
+    m.plot(x,y,'go',markersize=2,alpha=.5)
+
+    plt.title('Geo Plotting')
+    plt.show()
+    # plt.savefig("map1.png")
+  \end{verbatim}
+
+\end{appendices}
+
+\end{document}
