@@ -115,9 +115,11 @@ import re
 
 # LDA(list_of_list_of_tokens,'hair_drier_html_file.html')
 
+import numpy as np
 
+df_microwave= df_microwave.sort_values(by=["product_id","review_date"],ascending=[True,False])
 
-df_microwave= df_microwave.sort_values("product_id")
+df_microwave["diff_date"]=pd.to_datetime(df_microwave["review_date"]).diff().apply(lambda x: x/np.timedelta64(1, 'D')).fillna(0).astype('int64')
 
 df_microwave.groupby("product_id").agg({'star_rating':'count'}).to_csv("number_over_each_product.csv")
 
@@ -155,14 +157,25 @@ for product in products_microwave:
         row_list.extend(row_en["helpful_votes"])
         row_list.extend(row_en["total_votes"])
         row_list.extend(row_en["verified_purchase"])
+        row_list.extend(row_en["review_date"])
+        row_list.extend(row_en["diff_date"])
+
+
+        last_date=pd.to_datetime(row_en["review_date"])
+
+
         array_item.append(row_list)
         element_ind=element_ind+1
     
-    array_for_LSTM.append(array_item)
-    if sample_DEBUG == 1: # debug
-        print(array_item)
+    if sample_DEBUG != 0: # debug
+        # print(row_en["review_date"])
+        # print(diff_days)
+        # print((pd.to_datetime(row_en["review_date"])-last_date).dt.days)
+        # print(array_item)
         df_part.to_csv("check_part.csv")
-        sample_DEBUG=0
+        sample_DEBUG=sample_DEBUG-1
+
+    array_for_LSTM.append(array_item)
 
     
 """
@@ -171,20 +184,29 @@ for product in products_microwave:
         array_for_LSTM[i] - the array to train
         array_for_LSTM[i][j] - the j-th item of an array
         for every item it looks like
-        [[string containing all the words except for stop words],star rating,total votes,verified purchase]
+        [[string containing all the words except for stop words],star rating,total votes,verified purchase,review_date,diff_date(in days)]
         Example:
             print(array_for_LSTM[0][0])
             output:
-                [['I', 'love', 'problem', 'popcorn', 'button', 'set', 
-                'long', 'enough', 'complete', 'popping', 'popcorn', 
-                'half', 'cooked', 'convection', 'works', 'great', 
-                'much', 'simpler', 'previous', 'combination', 'Convection', 
-                'Microwave', 'oven'],
-                 4, 6, 8, 'N']
+               [['When', 'remodeling', 'kitchen', 'decided', 'replace', 
+               'Sharp', 'countertop', 'convection', 'microwave', 'range', 
+               'model', 'I', 'really', 'miss', 'old', 'new', 'model', 'seems',
+                'lot', 'noisier', 'old', 'I', 'went', '1', '5', 'cubic', 'feet',
+                 '1', '1', 'feels', 'like', 'I', 'lost', 'lot', 'room', 'hood', 
+                 'light', 'VERY', 'dim', 'replacement', 'bulbs', 'cost', 'least', 
+                 '4', 'piece', 'find', 'Because', 'vent', 'kitchen', 'sent', 'away',
+                  'Sharp', 'charcoal', 'filter', 'cost', '20', 'filter', 'plus', 'shipping', 
+                  'handling', 'planned', 'vent', 'outside', 'vent', 'even', 'come', 'close', 'matching', 
+                  'hole', 'former', 'range', 'hood', 'cooking', 'turntable', 'white', 'keep', 'clean', 
+                  'month', 'old', 'stained', 'already', 'I', 'like', 'cooking', 'area', 'eye', 'level', 
+                  'I', 'researched', 'price', 'comparable', 'items', 'web', 'buying', 'Amazon', 'offered', 
+                  'best', 'price', 'well', 'free', 'shipping', 'I', 'pleased', 'Amazon'],
+                3, 56, 61, 'Y', '12/10/2004', 0]
+        Note:
+            the date difference is in (days)
 """
 
-print(array_for_LSTM[0][0])
-
+# print(array_for_LSTM[0][0])
 
 # list_of_list_of_tokens=[]
 # for s in df_pacifier["review_body"].astype(str):
