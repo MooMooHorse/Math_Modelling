@@ -116,8 +116,9 @@ import re
 # LDA(list_of_list_of_tokens,'hair_drier_html_file.html')
 
 import numpy as np
+df_microwave["review_date"]=pd.to_datetime(df_microwave["review_date"])
 
-df_microwave= df_microwave.sort_values(by=["product_id","review_date"],ascending=[True,False])
+df_microwave= df_microwave.sort_values(by=["product_id","review_date"],ascending=[True,True])
 
 df_microwave["diff_date"]=pd.to_datetime(df_microwave["review_date"]).diff().apply(lambda x: x/np.timedelta64(1, 'D')).fillna(0).astype('int64')
 
@@ -144,12 +145,24 @@ element_ind=0 # since it's sorted, you can extract element from token_list in th
 
 sample_DEBUG=0 # turn on <- =1
 
+pd.set_option('mode.chained_assignment', None) # It must be a dickhead to set a warning on this point!
+
 for product in products_microwave:
     array_item=[]
     df_part=df_microwave[df_microwave["product_id"] == product]
+    df_part.loc[df_part.index[0],"diff_date"]=0
+
     df_len=[*range(len(df_part))]
     df_part.index=df_len # "reindexing"
 
+
+    if sample_DEBUG != 0: # debug
+        print(df_part["diff_date"])
+        # print(diff_days)
+        # print((pd.to_datetime(row_en["review_date"])-last_date).dt.days)
+        # print(array_item)
+        # df_part.to_csv("check_part.csv")
+        sample_DEBUG=sample_DEBUG-1
     for row_n in df_len:
         row_en=df_part[df_part.index==row_n]
         row_list=[list_of_list_of_tokens[element_ind]]
@@ -167,13 +180,6 @@ for product in products_microwave:
         array_item.append(row_list)
         element_ind=element_ind+1
     
-    if sample_DEBUG != 0: # debug
-        # print(row_en["review_date"])
-        # print(diff_days)
-        # print((pd.to_datetime(row_en["review_date"])-last_date).dt.days)
-        # print(array_item)
-        df_part.to_csv("check_part.csv")
-        sample_DEBUG=sample_DEBUG-1
 
     array_for_LSTM.append(array_item)
 
@@ -206,7 +212,7 @@ for product in products_microwave:
             the date difference is in (days)
 """
 
-# print(array_for_LSTM[0][0])
+# print(array_for_LSTM[1][1])
 
 # list_of_list_of_tokens=[]
 # for s in df_pacifier["review_body"].astype(str):
