@@ -117,10 +117,15 @@ import re
 
 
 
+df_microwave= df_microwave.sort_values("product_id")
 
+df_microwave.groupby("product_id").agg({'star_rating':'count'}).to_csv("number_over_each_product.csv")
 
+products_microwave=df_microwave.groupby("product_id").agg({'star_rating':'count'}).index.tolist()
 
-
+"""
+    tokenize comments
+"""
 list_of_list_of_tokens=[]
 for s in df_microwave["review_body"].astype(str):
     list_of_tokens = re.findall(r'\w+', s)
@@ -129,13 +134,56 @@ for s in df_microwave["review_body"].astype(str):
 list_of_list_of_tokens = Del_list(list_of_list_of_tokens,'microwave_html_file.html')
 
 """
-    api1:
-        list_of_list_of_tokens deleted comments
+    create array
 """
 
+array_for_LSTM=[]
+element_ind=0 # since it's sorted, you can extract element from token_list in this way
 
+sample_DEBUG=0 # turn on <- =1
 
+for product in products_microwave:
+    array_item=[]
+    df_part=df_microwave[df_microwave["product_id"] == product]
+    df_len=[*range(len(df_part))]
+    df_part.index=df_len # "reindexing"
 
+    for row_n in df_len:
+        row_en=df_part[df_part.index==row_n]
+        row_list=[list_of_list_of_tokens[element_ind]]
+        row_list.extend(row_en["star_rating"])
+        row_list.extend(row_en["helpful_votes"])
+        row_list.extend(row_en["total_votes"])
+        row_list.extend(row_en["verified_purchase"])
+        array_item.append(row_list)
+        element_ind=element_ind+1
+    
+    array_for_LSTM.append(array_item)
+    if sample_DEBUG == 1: # debug
+        print(array_item)
+        df_part.to_csv("check_part.csv")
+        sample_DEBUG=0
+
+    
+"""
+    api:
+        array_for_LSTM - a list of array to train
+        array_for_LSTM[i] - the array to train
+        array_for_LSTM[i][j] - the j-th item of an array
+        for every item it looks like
+        [[string containing all the words except for stop words],star rating,total votes,verified purchase]
+        Example:
+            print(array_for_LSTM[0][0])
+            output:
+                [['I', 'love', 'problem', 'popcorn', 'button', 'set', 
+                'long', 'enough', 'complete', 'popping', 'popcorn', 
+                'half', 'cooked', 'convection', 'works', 'great', 
+                'much', 'simpler', 'previous', 'combination', 'Convection', 
+                'Microwave', 'oven'],
+                 4, 6, 8, 'N']
+"""
+
+print(array_for_LSTM[0][0])
 
 
 # list_of_list_of_tokens=[]
