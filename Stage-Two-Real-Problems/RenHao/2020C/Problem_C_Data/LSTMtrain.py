@@ -211,31 +211,69 @@ for product in products_microwave:
         Note:
             the date difference is in (days)
 """
+
 from tqdm import tqdm
 from numpy import array
-from numpy import argmax
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
+
+input_size=205
+output_size=input_size
+train_window=3
+train_windows=train_window*input_size
+hidden_size=500
+words_min_repeatence=4
+preseved_space=5
+max_value_of_each_preseved_space=[-100]*6
+max_value_of_each_preseved_space[3]=1
 
 dic_for_words=[]
 real_dic={}
-for i in array_for_LSTM:
-    for j in i:
-        dic_for_words.extend(j[0])
+k=-1
+for i in range(len(array_for_LSTM)):
+    i=k+1
+    if i == len(array_for_LSTM):
+        break
+    if len(array_for_LSTM[i]) > train_window:
+        for j in array_for_LSTM[i]:
+            dic_for_words.extend(j[0])
+            for l in range(len(j[1:])):
+                try:
+                    if j[l+1]>max_value_of_each_preseved_space[l]:
+                        max_value_of_each_preseved_space[l]=j[l+1]
+                except:
+                    continue
+    else:
+        del array_for_LSTM[i]
+        i-=1
+    k=i
+print(max_value_of_each_preseved_space)
 values = array(dic_for_words)
 label_encoder = LabelEncoder()
 integer_encoded = label_encoder.fit_transform(values)
 real_dic=real_dic.fromkeys(dic_for_words,0)
-for i in tqdm(dic_for_words):
+for i in dic_for_words:
     real_dic[i]+=1
+real_dic=dict((k,integer_encoded[dic_for_words.index(k)]) for k,v in real_dic.items() if v>=words_min_repeatence)
+reversed_dic={v:k for k,v in real_dic.items()}
 
+max_label=max(real_dic.values())
+
+dic_for_words=[]
+i=0
+j=0
+k=0
+values=[]
+label_encoder=[]
+integer_encoded=[]
+
+'''
 list_for_words=[[],[]]
 list_for_words[0]=list(real_dic.keys())
 list_for_words[1]=list(real_dic.values())
 list_for_words = list(map(list, zip(*list_for_words)))
 list_for_words.sort(key=lambda x:x[1],reverse=True)
-print(list_for_words[0:200])
-
+print((list_for_words))
+'''
 
 
 
@@ -244,40 +282,91 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
+input_dataset=[]
+data_for_single_comment=[]
+data_for_each_brand=[]
+
+def create_inout_sequences(input_data, tw,input_size):
+    inout_seq = []
+    L = len(input_data)
+    for i in range(0,L-tw-input_size,input_size):
+        train_seq = input_data[i:i+tw]
+        train_label = input_data[i+tw:i+tw+input_size]
+        inout_seq.append((train_seq ,train_label))
+    return inout_seq
 
 
-class lstm(nn.Module):
-    def __init__(self,input_size=2,hidden_size=4,output_size=1,num_layer=2):
-        super(lstm,self).__init__()
-        self.layer1 = nn.LSTM(input_size,hidden_size,num_layer)
-        self.layer2 = nn.Linear(hidden_size,output_size)
-    
-    def forward(self,x):
-        x,_ = self.layer1(x)
-        s,b,h = x.size()
-        x = x.view(s*b,h)
-        x = self.layer2(x)
-        x = x.view(s,b,-1)
-        return x
-
-model = lstm(2,4,1,2)
-criterion = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
-
-
-
-
-
-'''
-
-# define example
-data = ['cold', 'cold', 'warm', 'cold', 'hot', 'hot', 'warm', 'cold', 'warm', 'hot']
+for i in tqdm(array_for_LSTM):
+    data_for_each_brand=[]
+    for j in i:
+        data_for_single_comment=[]
+        for k in j[0]:
+            try:
+                data_for_single_comment.append(real_dic[k])
+            except:
+                continue
+        try:
+            data_for_single_comment.extend([0]*(input_size-len(data_for_single_comment)-preseved_space))
+        except:
+            if len(data_for_single_comment)>input_size-5:
+                data_for_single_comment=data_for_single_comment[:input_size-preseved_space]
+        
+        data_for_single_comment=(pd.Series(data_for_single_comment)/max_label).tolist()
+        for l in range(6):
+            if l == 3:
+                data_for_single_comment.append(float(YorN.index(j[l+1])*-1+1))
+            elif l != 4:
+                data_for_single_comment.append(j[l+1]/max_value_of_each_preseved_space[l])
+        data_for_each_brand.extend(data_for_single_comment)
+    data_for_each_brand=torch.FloatTensor(data_for_each_brand).cuda()
+    input_dataset.extend(create_inout_sequences(data_for_each_brand,train_windows,input_size))
 
 
-inverted = label_encoder.inverse_transform([argmax(onehot_encoded[:, :])])
-print(inverted)
+        
 
-'''
+
+
+
+class LSTM(nn.Module):
+    def __init__(self, input_size=1, hidden_layer_size=200, output_size=1):
+        super().__init__()
+        self.hidden_layer_size = hidden_layer_size
+
+        self.lstm = nn.LSTM(input_size, hidden_layer_size).cuda()
+
+        self.linear = nn.Linear(hidden_layer_size, output_size).cuda()
+
+        self.hidden_cell = (torch.zeros(input_size,1,self.hidden_layer_size).cuda(),
+                            torch.zeros(input_size,1,self.hidden_layer_size).cuda())
+
+    def forward(self, input_seq):
+        lstm_out, self.hidden_cell = self.lstm(input_seq.view(train_window ,1, -1), self.hidden_cell)
+        predictions = self.linear(lstm_out.view(train_window, -1))
+        return predictions[-1]
+
+model = LSTM(input_size,hidden_size,output_size)
+loss_function = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+epochs = 150
+
+for i in range(epochs):
+    for seq, labels in input_dataset:
+        optimizer.zero_grad()
+        model.hidden_cell = (torch.zeros(1, 1, model.hidden_layer_size).cuda(),
+                        torch.zeros(1, 1, model.hidden_layer_size).cuda())
+
+        y_pred = model(seq)
+
+        single_loss = loss_function(y_pred, labels)
+        single_loss.backward()
+        optimizer.step()
+
+    if i%5 == 4:
+        print(f'epoch: {i+1:3} loss: {single_loss.item():10.8f}')
+
+print(f'epoch: {i+1:3} loss: {single_loss.item():10.10f}')
+torch.save(model, 'LSTM_model.pth') 
 # print(array_for_LSTM[1][1])
 
 # list_of_list_of_tokens=[]
