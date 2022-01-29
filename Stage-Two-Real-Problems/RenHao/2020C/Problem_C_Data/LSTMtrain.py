@@ -165,7 +165,8 @@ for product in products_microwave:
         sample_DEBUG=sample_DEBUG-1
     for row_n in df_len:
         row_en=df_part[df_part.index==row_n]
-        row_list=[list_of_list_of_tokens[element_ind]]
+        a = (map(lambda x: x.lower(), list_of_list_of_tokens[element_ind]))
+        row_list = [list(a)]
         row_list.extend(row_en["star_rating"])
         row_list.extend(row_en["helpful_votes"])
         row_list.extend(row_en["total_votes"])
@@ -279,7 +280,6 @@ print((list_for_words))
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 
 input_dataset=[]
@@ -348,9 +348,9 @@ model = LSTM(input_size,hidden_size,output_size)
 loss_function = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 20
+epochs = 2000
 
-for i in range(epochs):
+for i in tqdm(range(epochs)):
     for seq, labels in input_dataset:
         optimizer.zero_grad()
         model.hidden_cell = (torch.zeros(1, 1, model.hidden_layer_size).cuda(),
