@@ -165,7 +165,8 @@ for product in products_microwave:
         sample_DEBUG=sample_DEBUG-1
     for row_n in df_len:
         row_en=df_part[df_part.index==row_n]
-        row_list=[list_of_list_of_tokens[element_ind]]
+        a = (map(lambda x: x.lower(), list_of_list_of_tokens[element_ind]))
+        row_list = [list(a)]
         row_list.extend(row_en["star_rating"])
         row_list.extend(row_en["helpful_votes"])
         row_list.extend(row_en["total_votes"])
@@ -211,7 +212,7 @@ for product in products_microwave:
         Note:
             the date difference is in (days)
 """
-
+# print(array_for_LSTM[0][0])
 
 from tqdm import tqdm
 from numpy import array
