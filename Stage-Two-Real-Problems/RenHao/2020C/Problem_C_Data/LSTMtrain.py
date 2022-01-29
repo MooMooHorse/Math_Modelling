@@ -218,9 +218,9 @@ from sklearn.preprocessing import LabelEncoder
 
 input_size=205
 output_size=input_size
-train_window=3
+train_window=10
 train_windows=train_window*input_size
-hidden_size=500
+hidden_size=1500
 words_min_repeatence=4
 preseved_space=5
 max_value_of_each_preseved_space=[-100]*6
@@ -289,7 +289,7 @@ data_for_each_brand=[]
 def create_inout_sequences(input_data, tw,input_size):
     inout_seq = []
     L = len(input_data)
-    for i in range(0,L-tw-input_size,input_size):
+    for i in range(0,L-tw-input_size+1,input_size):
         train_seq = input_data[i:i+tw]
         train_label = input_data[i+tw:i+tw+input_size]
         inout_seq.append((train_seq ,train_label))
@@ -336,8 +336,8 @@ class LSTM(nn.Module):
 
         self.linear = nn.Linear(hidden_layer_size, output_size).cuda()
 
-        self.hidden_cell = (torch.zeros(input_size,1,self.hidden_layer_size).cuda(),
-                            torch.zeros(input_size,1,self.hidden_layer_size).cuda())
+        self.hidden_cell = (torch.zeros(1,1,self.hidden_layer_size).cuda(),
+                            torch.zeros(1,1,self.hidden_layer_size).cuda())
 
     def forward(self, input_seq):
         lstm_out, self.hidden_cell = self.lstm(input_seq.view(train_window ,1, -1), self.hidden_cell)
@@ -348,7 +348,7 @@ model = LSTM(input_size,hidden_size,output_size)
 loss_function = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 150
+epochs = 20
 
 for i in range(epochs):
     for seq, labels in input_dataset:
@@ -366,7 +366,7 @@ for i in range(epochs):
         print(f'epoch: {i+1:3} loss: {single_loss.item():10.8f}')
 
 print(f'epoch: {i+1:3} loss: {single_loss.item():10.10f}')
-torch.save(model, 'LSTM_model.pth') 
+torch.save(model, f'LSTM_model_{input_size-preseved_space}_{train_window}_{hidden_size}_{epochs}.pth') 
 # print(array_for_LSTM[1][1])
 
 # list_of_list_of_tokens=[]
