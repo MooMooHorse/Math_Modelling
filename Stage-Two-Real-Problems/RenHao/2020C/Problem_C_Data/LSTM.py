@@ -213,9 +213,7 @@ for product in products_microwave:
 """
 from tqdm import tqdm
 from numpy import array
-from numpy import argmax
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
 
 dic_for_words=[]
 real_dic={}
@@ -228,14 +226,15 @@ integer_encoded = label_encoder.fit_transform(values)
 real_dic=real_dic.fromkeys(dic_for_words,0)
 for i in tqdm(dic_for_words):
     real_dic[i]+=1
-
+real_dic=dict((k,integer_encoded[dic_for_words.index(k)]) for k,v in real_dic.items() if v>3 )#去掉出现次数小于等于3的词
+'''
 list_for_words=[[],[]]
 list_for_words[0]=list(real_dic.keys())
 list_for_words[1]=list(real_dic.values())
 list_for_words = list(map(list, zip(*list_for_words)))
 list_for_words.sort(key=lambda x:x[1],reverse=True)
-print(list_for_words[0:200])
-
+print((list_for_words))
+'''
 
 
 
@@ -267,17 +266,6 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
 
 
 
-
-'''
-
-# define example
-data = ['cold', 'cold', 'warm', 'cold', 'hot', 'hot', 'warm', 'cold', 'warm', 'hot']
-
-
-inverted = label_encoder.inverse_transform([argmax(onehot_encoded[:, :])])
-print(inverted)
-
-'''
 # print(array_for_LSTM[1][1])
 
 # list_of_list_of_tokens=[]
