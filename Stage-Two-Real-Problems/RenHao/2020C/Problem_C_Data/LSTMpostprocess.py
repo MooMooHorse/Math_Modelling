@@ -1,10 +1,11 @@
 import numpy as np
+import pandas as pd
 
 outputs=np.load('outputs.npy',allow_pickle=True)
 array_for_train_data=np.load('array_for_10_trainwindows.npy',allow_pickle=True)
 outputs=outputs.tolist()
 array_for_train_data=array_for_train_data.tolist()
-print(outputs[0][0])
+# print(outputs[0][0])
 """
     api:
         array_for_train_data - same structure with array_for_LSTM, except brand with comments number that less than or equals to trainwindows deleted.
@@ -31,3 +32,36 @@ print(outputs[0][0])
                 If (dtype = integer) is preferred, just let me know
 
 """
+
+def add_empty_date(list_of_products,pos=-1,insert_time="22/2/2022"):# init value is something that's impossible to exist in data
+    for product in list_of_products:
+        for review in product:
+            review.insert(pos,pd.to_datetime(insert_time))
+    return list_of_products
+
+outputs=add_empty_date(outputs) # add date
+
+sample_DEBUG=1 #number of item to display for debugging
+df=pd.DataFrame([],columns=["product_id_processed","comments","star_rating","helpful_votes","total_votes","verified_purchase","review_date","diff_date"])
+product_index=0
+for product in array_for_train_data:
+    df_product=pd.DataFrame(product,columns=["comments","star_rating","helpful_votes","total_votes","verified_purchase","review_date","diff_date"])
+    df_predict=pd.DataFrame(outputs[product_index],columns=["comments","star_rating","helpful_votes","total_votes","verified_purchase","review_date","diff_date"])
+    df_product["is_predict"]=0
+    df_predict["is_predict"]=1
+    df_product["product_id_processed"]=product_index
+    df_predict["product_id_processed"]=product_index
+    df=pd.concat([df,df_product,df_predict])
+
+
+    product_index=product_index+1
+
+
+    if sample_DEBUG!=0 :
+        print(df_predict)
+        sample_DEBUG=sample_DEBUG-1
+df=df.astype({"is_predict":"int64"})
+df.index.name="index_product_wise"
+# print(df)
+
+df.to_csv("postprocess_out/original.csv")
