@@ -216,19 +216,22 @@ from tqdm import tqdm
 from numpy import array
 from sklearn.preprocessing import LabelEncoder
 
-input_size=209
-output_size=input_size
 train_window=10
-train_windows=train_window*input_size
 hidden_size=1500
-words_min_repeatence=70
+words_min_repeatence=30
 preseved_space=5
+
+medvalue=[[]]*6
 max_value_of_each_preseved_space=[-100]*6
 max_value_of_each_preseved_space[3]=1
 
 dic_for_words=[]
 real_dic={}
 k=-1
+
+for i in range(len(medvalue)):
+    medvalue[i]=[]
+
 for i in range(len(array_for_LSTM)):
     i=k+1
     if i == len(array_for_LSTM):
@@ -236,18 +239,26 @@ for i in range(len(array_for_LSTM)):
     if len(array_for_LSTM[i]) > train_window:
         for j in array_for_LSTM[i]:
             dic_for_words.extend(j[0])
-            for l in range(len(j[1:])):
-                try:
-                    if j[l+1]>max_value_of_each_preseved_space[l]:
-                        max_value_of_each_preseved_space[l]=j[l+1]
-                except:
-                    continue
+            for l in j[1:]:
+                (medvalue[j.index(l)-1]).append(l)
     else:
         del array_for_LSTM[i]
         i-=1
     k=i
 
-print(max_value_of_each_preseved_space)
+for i in medvalue:
+    try:
+        j=np.median(i)
+        if j>0:
+            max_value_of_each_preseved_space[medvalue.index(i)]=j
+        else:
+            max_value_of_each_preseved_space[medvalue.index(i)]=np.mean(i)
+    except:
+        continue
+
+
+
+
 values = array(dic_for_words)
 label_encoder = LabelEncoder()
 integer_encoded = label_encoder.fit_transform(values)
@@ -262,7 +273,9 @@ for i in real_dic.keys():
 
 reversed_dic={v:k for k,v in real_dic.items()}
 
-max_label=max(real_dic.values())
+input_size=preseved_space+len(real_dic)
+output_size=input_size
+train_windows=train_window*input_size
 
 dic_for_words=[]
 i=0
@@ -349,11 +362,12 @@ class LSTM(nn.Module):
 def decode(decode_input,fp):
     line_output=[]
     complete_output=[]
-    for i in decode_input[fp:]:
+    for i in decode_input[-fp+1:]:
         line_output=[]
-        for j in i[:-preseved_space]:
-            if round(j)!=0:
-                line_output.append(reversed_dic[i.index(j)])
+        for j in range(len(i[:-preseved_space])):
+            print(i)
+            if round(i[j])!=0:
+                line_output.append(reversed_dic[j])
         line_output=[line_output]
         for j in range(preseved_space+1,0,-1):
             if j>2:
@@ -364,27 +378,24 @@ def decode(decode_input,fp):
     return complete_output
 
 
-model=torch.load('LSTM_model_204_10_500_50.pth')
+model=torch.load('LSTM_model_458_10_1500_50.pth')
 
 loss_function = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 model.eval()
-fut_pred = train_window
+
 outputs=[]
 for input_datasets in output_dataset:
     test_inputs = input_datasets[-1][0].view(-1,input_size).tolist()
-
-
+    fut_pred = round(0.2*(len(input_datasets)+train_window-1)+1)
     for i in range(fut_pred):
         seq = torch.FloatTensor(test_inputs[-train_window:]).cuda()
         with torch.no_grad():
             model.hidden = (torch.zeros(1, 1, model.hidden_layer_size).cuda(),
                             torch.zeros(1, 1, model.hidden_layer_size).cuda())
             test_inputs.append(model(seq).tolist())
-
-
-    outputs.append(decode(test_inputs,train_window))
+    outputs.append(decode(test_inputs,fut_pred))
 
 
 

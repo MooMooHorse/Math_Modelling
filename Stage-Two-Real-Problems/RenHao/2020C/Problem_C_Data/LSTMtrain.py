@@ -217,19 +217,26 @@ from tqdm import tqdm
 from numpy import array
 from sklearn.preprocessing import LabelEncoder
 
-input_size=209
-output_size=input_size
+from tqdm import tqdm
+from numpy import array
+from sklearn.preprocessing import LabelEncoder
+
 train_window=10
-train_windows=train_window*input_size
-hidden_size=500
-words_min_repeatence=70
+hidden_size=1500
+words_min_repeatence=30
 preseved_space=5
+
+medvalue=[[]]*6
 max_value_of_each_preseved_space=[-100]*6
 max_value_of_each_preseved_space[3]=1
 
 dic_for_words=[]
 real_dic={}
 k=-1
+
+for i in range(len(medvalue)):
+    medvalue[i]=[]
+
 for i in range(len(array_for_LSTM)):
     i=k+1
     if i == len(array_for_LSTM):
@@ -237,18 +244,23 @@ for i in range(len(array_for_LSTM)):
     if len(array_for_LSTM[i]) > train_window:
         for j in array_for_LSTM[i]:
             dic_for_words.extend(j[0])
-            for l in range(len(j[1:])):
-                try:
-                    if j[l+1]>max_value_of_each_preseved_space[l]:
-                        max_value_of_each_preseved_space[l]=j[l+1]
-                except:
-                    continue
+            for l in j[1:]:
+                (medvalue[j.index(l)-1]).append(l)
     else:
         del array_for_LSTM[i]
         i-=1
     k=i
 
-print(max_value_of_each_preseved_space)
+for i in medvalue:
+    try:
+        j=np.median(i)
+        if j>0:
+            max_value_of_each_preseved_space[medvalue.index(i)]=j
+        else:
+            max_value_of_each_preseved_space[medvalue.index(i)]=np.mean(i)
+    except:
+        continue
+
 values = array(dic_for_words)
 label_encoder = LabelEncoder()
 integer_encoded = label_encoder.fit_transform(values)
@@ -263,6 +275,9 @@ for i in real_dic.keys():
 
 reversed_dic={v:k for k,v in real_dic.items()}
 
+input_size=preseved_space+len(real_dic)
+output_size=input_size
+train_windows=train_window*input_size
 
 dic_for_words=[]
 i=0
@@ -318,8 +333,6 @@ for i in tqdm(array_for_LSTM):
         data_for_each_brand.extend(data_for_single_comment)
     data_for_each_brand=torch.FloatTensor(data_for_each_brand).cuda()
     input_dataset.extend(create_inout_sequences(data_for_each_brand,train_windows,input_size))
-
-print(input_dataset[1][1])
         
 
 
