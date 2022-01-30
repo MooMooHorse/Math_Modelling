@@ -386,8 +386,12 @@ for input_datasets in output_dataset:
     outputs.append(decode(test_inputs,train_window))
 
 
-print(outputs)
 
+outputs=np.array(outputs,dtype=object)
+np.save('outputs.npy',outputs)
+array_for_LSTM=np.array(array_for_LSTM,dtype=object)
+np.save(f'array_for_{train_window}_trainwindows.npy',array_for_LSTM)
+    
 
 # print(array_for_LSTM[1][1])
 
