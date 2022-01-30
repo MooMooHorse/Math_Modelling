@@ -221,7 +221,7 @@ input_size=209
 output_size=input_size
 train_window=10
 train_windows=train_window*input_size
-hidden_size=1500
+hidden_size=500
 words_min_repeatence=70
 preseved_space=5
 max_value_of_each_preseved_space=[-100]*6
@@ -263,7 +263,6 @@ for i in real_dic.keys():
 
 reversed_dic={v:k for k,v in real_dic.items()}
 
-max_label=max(real_dic.values())
 
 dic_for_words=[]
 i=0
@@ -320,7 +319,7 @@ for i in tqdm(array_for_LSTM):
     data_for_each_brand=torch.FloatTensor(data_for_each_brand).cuda()
     input_dataset.extend(create_inout_sequences(data_for_each_brand,train_windows,input_size))
 
-
+print(input_dataset[1][1])
         
 
 
@@ -350,7 +349,7 @@ model = LSTM(input_size,hidden_size,output_size)
 loss_function = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 2000
+epochs = 50
 
 for i in tqdm(range(epochs)):
     for seq, labels in input_dataset:
