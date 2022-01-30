@@ -333,7 +333,7 @@ for i in tqdm(array_for_LSTM):
         data_for_each_brand.extend(data_for_single_comment)
     data_for_each_brand=torch.FloatTensor(data_for_each_brand).cuda()
     input_dataset.extend(create_inout_sequences(data_for_each_brand,train_windows,input_size))
-        
+print(input_dataset[0][0])
 
 
 
@@ -347,7 +347,6 @@ class LSTM(nn.Module):
 
         self.linear = nn.Linear(hidden_layer_size, output_size).cuda()
 
-        self.ReLU = nn.ReLU()
 
         self.hidden_cell = (torch.zeros(1,1,self.hidden_layer_size).cuda(),
                             torch.zeros(1,1,self.hidden_layer_size).cuda())
@@ -355,7 +354,6 @@ class LSTM(nn.Module):
     def forward(self, input_seq):
         lstm_out, self.hidden_cell = self.lstm(input_seq.view(train_window ,1, -1), self.hidden_cell)
         predictions = self.linear(lstm_out.view(train_window, -1))
-        predictions = self.ReLU(predictions)
         return predictions[-1]
 
 model = LSTM(input_size,hidden_size,output_size)

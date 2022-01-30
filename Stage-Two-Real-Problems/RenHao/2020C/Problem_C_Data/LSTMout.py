@@ -347,7 +347,7 @@ class LSTM(nn.Module):
 
         self.linear = nn.Linear(hidden_layer_size, output_size).cuda()
 
-        self.ReLU = nn.ReLU()
+
 
         self.hidden_cell = (torch.zeros(1,1,self.hidden_layer_size).cuda(),
                             torch.zeros(1,1,self.hidden_layer_size).cuda())
@@ -355,18 +355,18 @@ class LSTM(nn.Module):
     def forward(self, input_seq):
         lstm_out, self.hidden_cell = self.lstm(input_seq.view(train_window ,1, -1), self.hidden_cell)
         predictions = self.linear(lstm_out.view(train_window, -1))
-        predictions = self.ReLU(predictions)
         return predictions[-1]
 
 
 def decode(decode_input,fp):
     line_output=[]
     complete_output=[]
+    if fp == 1 :
+        return complete_output
     for i in decode_input[-fp+1:]:
         line_output=[]
         for j in range(len(i[:-preseved_space])):
-            print(i)
-            if round(i[j])!=0:
+            if round(i[j]*2.5)!=0:
                 line_output.append(reversed_dic[j])
         line_output=[line_output]
         for j in range(preseved_space+1,0,-1):
