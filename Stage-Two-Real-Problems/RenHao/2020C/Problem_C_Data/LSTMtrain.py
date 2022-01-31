@@ -197,23 +197,23 @@ del_product_review_num_threshold=-1
         array_for_LSTM[i][j] - the j-th item of an array
         for every item it looks like
         [[string containing all the words except for stop words],star rating,total votes,verified purchase,review_date,diff_date(in days)]
+
+        del_word_freq=70, Choose a word frequency to select only high freq words
+        Format_Words="Word_List", If "Encoded_List" then it's encoded, then you can directly train them
+        if_train_rating=True,     You can select whether you want to train/normalize this
+        if_train_helpful_vote=True,
+        if_train_total_vote=True,
+        if_train_vine=True,
+        if_train_diff_date=True,
+        remove_date=False,        Choose to remove the dates or not
+        del_product_review_num_threshold=-1 Choose a threshold to sift the products,
+            eg. if this = 40 then you will only get products with >40 reviews
+
         Example:
             print(array_for_LSTM[0][0])
             output:
-               [['When', 'remodeling', 'kitchen', 'decided', 'replace', 
-               'Sharp', 'countertop', 'convection', 'microwave', 'range', 
-               'model', 'I', 'really', 'miss', 'old', 'new', 'model', 'seems',
-                'lot', 'noisier', 'old', 'I', 'went', '1', '5', 'cubic', 'feet',
-                 '1', '1', 'feels', 'like', 'I', 'lost', 'lot', 'room', 'hood', 
-                 'light', 'VERY', 'dim', 'replacement', 'bulbs', 'cost', 'least', 
-                 '4', 'piece', 'find', 'Because', 'vent', 'kitchen', 'sent', 'away',
-                  'Sharp', 'charcoal', 'filter', 'cost', '20', 'filter', 'plus', 'shipping', 
-                  'handling', 'planned', 'vent', 'outside', 'vent', 'even', 'come', 'close', 'matching', 
-                  'hole', 'former', 'range', 'hood', 'cooking', 'turntable', 'white', 'keep', 'clean', 
-                  'month', 'old', 'stained', 'already', 'I', 'like', 'cooking', 'area', 'eye', 'level', 
-                  'I', 'researched', 'price', 'comparable', 'items', 'web', 'buying', 'Amazon', 'offered', 
-                  'best', 'price', 'well', 'free', 'shipping', 'I', 'pleased', 'Amazon'],
-                3, 56, 61, 'Y', '12/10/2004', 0]
+               See it your self
+               After cooking and before cooking
         Note:
             the date difference is in (days)
             You MUST!!!!!!!!!!! insure the date difference is at the end.
