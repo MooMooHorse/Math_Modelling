@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 df_hair = pd.read_csv("hair_dryer.tsv",sep='\t')
 df_microwave=pd.read_csv("microwave.tsv",sep='\t')
@@ -60,7 +61,7 @@ def Del_list(list_of_list_of_tokens,htmlname):
     from nltk.corpus import stopwords
     stop_words = stopwords.words('english')
     stop_words.extend(['from', 'subject', 're', 'edu', 'use','br','and','to','a','it','We','It','would','the','one','This','A','2','The','I','When'])
-
+    stop_words.extend(['1','3','4','5','6','7','8','9'])
 
     for list_member in list_of_list_of_tokens:
         for stop_item in stop_words:
@@ -115,7 +116,7 @@ import re
 
 # LDA(list_of_list_of_tokens,'hair_drier_html_file.html')
 
-import numpy as np
+
 df_microwave["review_date"]=pd.to_datetime(df_microwave["review_date"])
 
 df_microwave= df_microwave.sort_values(by=["product_id","review_date"],ascending=[True,True])
@@ -184,8 +185,12 @@ for product in products_microwave:
 
     array_for_LSTM.append(array_item)
 
-    
-"""
+
+def Cook_data(array_for_LSTM,del_word_freq=70,Format_Words="Word_List",if_train_rating=True,
+if_train_helpful_vote=True,if_train_total_vote=True,if_train_vine=True,if_train_diff_date=True,remove_date=False,
+del_product_review_num_threshold=-1
+):
+    """
     api:
         array_for_LSTM - a list of array to train
         array_for_LSTM[i] - the array to train
@@ -211,7 +216,320 @@ for product in products_microwave:
                 3, 56, 61, 'Y', '12/10/2004', 0]
         Note:
             the date difference is in (days)
-"""
+            You MUST!!!!!!!!!!! insure the date difference is at the end.
+    """
+
+    # Filter Products
+
+    for product_index,product in enumerate(array_for_LSTM):
+        if len(product)<=del_product_review_num_threshold:
+            del array_for_LSTM[product_index]
+
+    # Filter Words using del_word_freq
+    dict_for_words={}
+    dict_for_word_index={}
+    for product_index,product in enumerate(array_for_LSTM):
+        for review_index,review in enumerate(product):
+            for word_in_review in review[0]:
+                if word_in_review in dict_for_words:
+                    dict_for_words[word_in_review]+=1
+                else:
+                    dict_for_words[word_in_review]=0
+
+    dict_for_words=dict(filter(lambda elem: elem[1]>=del_word_freq,dict_for_words.items()))
+
+    for word_ind,dic_key in enumerate(dict_for_words.keys()):
+        dict_for_word_index[dic_key]=word_ind
+
+
+    for product_index,product in enumerate(array_for_LSTM):
+        for review_index,review in enumerate(product):
+            word_list=[]
+            for word_in_review in review[0]:
+                if word_in_review in dict_for_words:
+                    word_list.append(word_in_review)
+            review[0]=word_list
+
+    # print(len(dict_for_word_index),len(dict_for_words))
+    Review_mean=[]
+    Review_std=[]
+
+
+    if Format_Words == "Encoded_List":
+        for product_index,product in enumerate(array_for_LSTM):
+            for review_index,review in enumerate(product):
+                word_list=[0]*len(dict_for_words)
+                for word_in_review in review[0]:
+                    if word_in_review in dict_for_word_index:
+                       word_list[dict_for_word_index[word_in_review]]+=1
+                review[0]=word_list
+    # Normalize every number
+
+        for word_index in range(len(dict_for_words)):
+            list_of_n_th_word=[review[0][word_index] for product in array_for_LSTM for review in product]
+            list_of_n_th_word=np.array(list_of_n_th_word)
+            mean_list=list_of_n_th_word.mean()
+            std_dev_list=list_of_n_th_word.std()
+
+            Review_mean.append(mean_list)
+            Review_std.append(std_dev_list)
+
+            if std_dev_list!=0:
+                list_of_n_th_word=(list_of_n_th_word-mean_list)/std_dev_list
+            
+            rev_index=0
+            for product in array_for_LSTM:
+                for review in product:
+                    review[0][word_index]=list_of_n_th_word[rev_index]
+                    rev_index+=1
+
+        # Package the first dimension
+        Review_mean=[Review_mean]
+        Review_std=[Review_std] 
+    
+    if if_train_rating:
+        list_of_train_data=[review[1] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+        mean_list=list_of_train_data.mean()
+        std_dev_list=list_of_train_data.std()
+
+        Review_mean.append(mean_list)
+        Review_std.append(std_dev_list)
+
+        # print(mean_list,std_dev_list)
+
+        if std_dev_list!=0:
+            list_of_train_data=(list_of_train_data-mean_list)/std_dev_list
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[1]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    if if_train_helpful_vote:
+        list_of_train_data=[review[2] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+        mean_list=list_of_train_data.mean()
+        std_dev_list=list_of_train_data.std()
+
+        Review_mean.append(mean_list)
+        Review_std.append(std_dev_list)
+
+        if std_dev_list!=0:
+            list_of_train_data=(list_of_train_data-mean_list)/std_dev_list
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[2]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    if if_train_total_vote:
+        list_of_train_data=[review[3] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+        mean_list=list_of_train_data.mean()
+        std_dev_list=list_of_train_data.std()
+
+        Review_mean.append(mean_list)
+        Review_std.append(std_dev_list)
+
+        if std_dev_list!=0:
+            list_of_train_data=(list_of_train_data-mean_list)/std_dev_list
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[3]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    map_Y_N={}
+    map_Y_N['Y']=1
+    map_Y_N['N']=0
+    for product in array_for_LSTM:
+        for review in product:
+            review[4]=map_Y_N[review[4]]
+
+    if if_train_vine:
+        list_of_train_data=[review[4] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+        mean_list=list_of_train_data.mean()
+        std_dev_list=list_of_train_data.std()
+
+        Review_mean.append(mean_list)
+        Review_std.append(std_dev_list)
+
+        if std_dev_list!=0:
+            list_of_train_data=(list_of_train_data-mean_list)/std_dev_list
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[4]=list_of_train_data[rev_index]
+                rev_index+=1
+    
+    removed_date=[]
+    if remove_date:
+        for product in array_for_LSTM:
+            for review in product:
+                removed_date.append(review[5])
+                del review[5]
+    
+    if if_train_diff_date:
+        list_of_train_data=[review[-1] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+        mean_list=list_of_train_data.mean()
+        std_dev_list=list_of_train_data.std()
+
+        Review_mean.append(mean_list)
+        Review_std.append(std_dev_list)
+        
+        if std_dev_list!=0:
+            list_of_train_data=(list_of_train_data-mean_list)/std_dev_list
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[-1]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    return array_for_LSTM,removed_date,dict_for_word_index,Review_mean,Review_std
+
+# print(array_for_LSTM[0][0])
+array_for_LSTM,removed_date,dict_for_words,Review_mean,Review_std= \
+Cook_data(array_for_LSTM,70,"Encoded_List",True,True,True,True,True,True,-1)
+
+
+def Reverse_Cook(array_for_LSTM,removed_date,dict_for_word_index,Review_mean,Review_std,Format_Words="Word_List",if_train_rating=True,
+if_train_helpful_vote=True,if_train_total_vote=True,if_train_vine=True,if_train_diff_date=True,remove_date=False):
+    if remove_date:
+        rem_id=0
+        for product in array_for_LSTM:
+            for review in product:
+                review.insert(5,removed_date[rem_id])
+                rem_id+=1
+
+    mean_std_ind=0
+
+    if Format_Words == "Encoded_List":
+
+        for word_index in range(len(dict_for_word_index)):
+            mean_list=Review_mean[0][word_index]
+            std_dev_list=Review_std[0][word_index]
+
+            list_of_n_th_word=[review[0][word_index] for product in array_for_LSTM for review in product]
+            list_of_n_th_word=np.array(list_of_n_th_word)
+
+            if std_dev_list!=0:
+                list_of_n_th_word=list_of_n_th_word*std_dev_list+mean_list
+            
+            rev_index=0
+            for product in array_for_LSTM:
+                for review in product:
+                    review[0][word_index]=list_of_n_th_word[rev_index]
+                    rev_index+=1
+
+
+
+        dict_for_word_index = dict((y,x) for x,y in dict_for_word_index.items())
+        # print(dict_for_word_index)
+        #RecoverWord
+        for product_index,product in enumerate(array_for_LSTM):
+            for review_index,review in enumerate(product):
+                word_list=[]
+                for wd_ind,word_freq in enumerate(review[0]):
+                    while word_freq>=0:
+                        if word_freq>=0.3:
+                            word_list.append(dict_for_word_index[wd_ind])
+                        word_freq-=1
+                review[0]=word_list
+
+        
+
+    if if_train_rating:
+        list_of_train_data=[review[1] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+
+        mean_list=Review_mean[1]
+        std_dev_list=Review_std[1]
+
+        if std_dev_list!=0:
+            list_of_train_data=list_of_train_data*std_dev_list+mean_list
+        
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[1]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    if if_train_helpful_vote:
+        list_of_train_data=[review[2] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+
+        mean_list=Review_mean[2]
+        std_dev_list=Review_std[2]
+
+        if std_dev_list!=0:
+            list_of_train_data=list_of_train_data*std_dev_list+mean_list
+        
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[2]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    if if_train_total_vote:
+        list_of_train_data=[review[3] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+
+        mean_list=Review_mean[3]
+        std_dev_list=Review_std[3]
+
+        if std_dev_list!=0:
+            list_of_train_data=list_of_train_data*std_dev_list+mean_list
+        
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[3]=list_of_train_data[rev_index]
+                rev_index+=1
+
+
+    if if_train_vine:
+        list_of_train_data=[review[4] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+
+        mean_list=Review_mean[4]
+        std_dev_list=Review_std[4]
+
+        if std_dev_list!=0:
+            list_of_train_data=list_of_train_data*std_dev_list+mean_list
+        
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                if list_of_train_data[rev_index]>=0.5:
+                    review[4]='Y'
+                else:
+                    review[4]='N'
+                rev_index+=1
+    
+    
+    if if_train_diff_date:
+        list_of_train_data=[review[-1] for product in array_for_LSTM for review in product]
+        list_of_train_data=np.array(list_of_train_data)
+
+        mean_list=Review_mean[-1]
+        std_dev_list=Review_std[-1]
+
+        if std_dev_list!=0:
+            list_of_train_data=list_of_train_data*std_dev_list+mean_list
+        
+        rev_index=0
+        for product in array_for_LSTM:
+            for review in product:
+                review[-1]=list_of_train_data[rev_index]
+                rev_index+=1
+
+    return array_for_LSTM
+# print(Review_mean)
+array_for_LSTM=Reverse_Cook(array_for_LSTM,removed_date,dict_for_words,Review_mean,Review_std,"Encoded_List",True,True,True,True,True,True)
+# print(array_for_LSTM[0][0])
 
 from tqdm import tqdm
 from numpy import array
